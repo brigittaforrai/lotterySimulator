@@ -1,0 +1,19 @@
+<template>
+  <div class="myButton">
+    <button>{{ name }}</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MyButton',
+  props: {
+    name: String
+  }
+}
+</script>
+
+
+<style scoped lang="scss">
+
+</style>
