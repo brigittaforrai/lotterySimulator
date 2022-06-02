@@ -12,9 +12,6 @@ export default {
   name: 'NumberView',
   components: { NumLabel },
   props: ['name', 'numbers'],
-  computed: {
-      
-  }
 }
 </script>
 

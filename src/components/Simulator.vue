@@ -11,7 +11,7 @@
             <p>{{numOfTickets}}</p>
         </div>
         <div>
-            <p>Yeras spent</p>
+            <p>Years spent</p>
             <p>{{years}}</p>
         </div>    
         <div>
@@ -43,6 +43,7 @@
     <NumberView name="Your numbers" :numbers="playerNums"></NumberView>
 
     <Checkbox/>
+    <Slider/>
 
 
   </div>
@@ -52,11 +53,12 @@
 import NumberView from './NumberView.vue'
 import MyButton from './MyButton.vue'
 import Checkbox from './Checkbox.vue'
+import Slider from './Slider.vue'
 
 
 export default {
   name: 'Simulator',
-  components: {NumberView, MyButton, Checkbox},
+  components: {NumberView, MyButton, Checkbox, Slider},
   data () {
     return {
     }
@@ -86,6 +88,7 @@ export default {
       this.$store.dispatch('drawing')
     },
     stop() {
+      this.$store.state.isDrawing = false
       clearInterval(this.$store.state.timeOut)
     }
   }

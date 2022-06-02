@@ -42,6 +42,9 @@ export default createStore({
     setRandom(state, val) {
       state.usingRandom = val
     },
+    setSpeed(state, val) {
+      state.speed = val
+    },
     setUserNumbers(state, array) {
       state.playerNumbers = array
     },
@@ -88,15 +91,16 @@ export default createStore({
       commit('setUserNumbers', arr)
     },
     drawing({ commit, state }) {
+      state.isDrawing = true
       let counter = 0
-      this.state.timeOut = setInterval(() => {
+      state.timeOut = setInterval(() => {
         const nums = generateRandomNumbers()
         counter++
 
         commit('updateData', {winningNums: nums, ticketsNum: counter})
         commit('setMatches')
         
-      }, this.state.speed)
+      }, state.speed)
     }
   },
   
