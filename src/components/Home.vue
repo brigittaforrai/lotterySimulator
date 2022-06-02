@@ -1,34 +1,17 @@
 <template>
   <div class="home">
-    <MyButton name="Start simulator" @click="openModal"></MyButton>
-    <Modal v-if="showModal"></Modal>
+    <Simulator></Simulator>
+    
     
   </div>
 </template>
 
 <script>
-import Modal from './Modal.vue'
-import MyButton from './MyButton.vue'
+import Simulator from './Simulator.vue'
 
 export default {
   name: 'Home',
-  components: { Modal, MyButton },
-
-  data () {
-    return {
-      showModal: false
-    }
-  },
-
-  methods: {
-    openModal() {
-      this.showModal = true
-    }
-  },
-
-  computed: {
-
-  }
+  components: { Simulator },
 }
 </script>
 
