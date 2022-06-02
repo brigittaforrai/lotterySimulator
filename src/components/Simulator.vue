@@ -20,24 +20,7 @@
         </div>    
     </section>
 
-    <section>
-        <div>
-            <p>2 matches</p>
-            <p>{{matches.two}}</p>
-        </div>
-        <div>
-            <p>3 matches</p>
-            <p>{{matches.three}}</p>
-        </div>    
-        <div>
-            <p>4 matches</p>
-            <p>{{matches.four}}</p>
-        </div>  
-        <div>
-            <p>5 matches</p>
-            <p>{{matches.five}}</p>
-        </div>   
-    </section>
+    <MatchesView/>
 
     <NumberView name="Winning numbers" :numbers="winningNums"></NumberView>
     <NumberView name="Your numbers" :numbers="playerNums"></NumberView>
@@ -54,11 +37,11 @@ import NumberView from './NumberView.vue'
 import MyButton from './MyButton.vue'
 import Checkbox from './Checkbox.vue'
 import Slider from './Slider.vue'
-
+import MatchesView from './MatchesView.vue'
 
 export default {
   name: 'Simulator',
-  components: {NumberView, MyButton, Checkbox, Slider},
+  components: {NumberView, MyButton, Checkbox, Slider, MatchesView},
   data () {
     return {
     }
@@ -99,7 +82,8 @@ export default {
 <style scoped lang="scss">
 
     .simulator {
-        max-width : 80%;
+        width: 80%;
+        max-width : 900px;
         height: auto;
         margin: 48px;
         padding: 48px 78px;
@@ -121,7 +105,8 @@ export default {
           background: $base-color;
           border-radius: 10px;
           color: $white;
-          width: 50%;
+          max-width: 50%;
+          min-width: 220px;
           div {
             display: flex;
             flex-direction: row;
