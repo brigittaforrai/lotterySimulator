@@ -2,15 +2,16 @@ import { createStore } from 'vuex'
 import { generateRandomNumbers, getNumberOfMatches } from '../helperFuctions.js'
 
 const TICKET_PRICE = 300
+const WEEKS_PER_YEAR = 52
 
 export default createStore({
   state: {
-    timeOut: null, // todo rename
+    drawingInterval: null,
     numberOfTickets: 0,
     yearsSpent: 0,
     costOfTickets: 0,
     usingRandom: true,
-    speed: 1,
+    speed: 300,
     playerNumbers: [6, 8, 23, 72, 60],
     winningNumbers: [],
     hitTheJackPot: false,
@@ -23,22 +24,21 @@ export default createStore({
     }
   },
 
-  getters: {
-    getTwoMatches (state) {
-       return state.matches.two
-    },
-    getThreeMatches (state) {
-      return state.matches.three
-    },
-    getFourMatches (state) {
-      return state.matches.four
-    },
-    getFiveMatches (state) {
-      return state.matches.five
-    }
-  },
-
   mutations: {
+    pause(state) {
+      clearInterval(state.drawingInterval)
+      state.isDrawing = false
+    },
+    // stop(state) {
+    //   clearInterval(state.drawingInterval)
+    //   state.isDrawing = false
+    //   state.numberOfTickets = 0
+    //   state.costOfTickets = 0
+    //   state.yearsSpent = 0
+    //   for (const [key, value] of Object.entries(state.matches)) {
+    //     state.matches[key] = 0
+    //   }
+    // },
     setRandom(state, val) {
       state.usingRandom = val
     },
@@ -54,13 +54,10 @@ export default createStore({
     changeSpeed(state, val) {
       state.speed = val
     },
-    updateData(state, data) {
-      const n = data.ticketsNum
-      state.numberOfTickets = n
+    updateData(state) {
+      const n = state.numberOfTickets
       state.costOfTickets = n * TICKET_PRICE
-      state.yearsSpent = Math.floor(n/52)
-
-      state.winningNumbers = data.winningNums
+      state.yearsSpent = Math.floor(n/WEEKS_PER_YEAR)
     },
     setMatches(state) {
       const n = getNumberOfMatches(state.winningNumbers, state.playerNumbers)
@@ -75,11 +72,11 @@ export default createStore({
           state.matches.four += 1
           break
         case 5: 
+          // todo
           state.matches.five += 1
           state.hitTheJackPot = true
           state.isDrawing = false
-          clearInterval(state.timeOut)
-          // todo
+          clearInterval(state.drawingInterval)
           break
       }
     }
@@ -87,21 +84,25 @@ export default createStore({
 
   actions: {
     generatePlayerNumbers({ commit }) {
-      const arr = generateRandomNumbers() // todo
-      commit('setUserNumbers', arr)
+      commit('setUserNumbers', generateRandomNumbers())
     },
     drawing({ commit, state }) {
-      state.isDrawing = true
-      let counter = 0
-      state.timeOut = setInterval(() => {
-        const nums = generateRandomNumbers()
-        counter++
+      if (state.isDrawing) {
+        return
+      }
 
-        commit('updateData', {winningNums: nums, ticketsNum: counter})
+      state.isDrawing = true
+      state.drawingInterval = setInterval(() => {
+        state.winningNumbers = generateRandomNumbers()
+        state.playerNumbers = state.usingRandom ? generateRandomNumbers() : state.playerNumbers
+        state.numberOfTickets++
+        commit('updateData')
         commit('setMatches')
-        
       }, state.speed)
     }
+  },
+
+  getters: {
   },
   
   modules: {

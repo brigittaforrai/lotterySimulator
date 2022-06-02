@@ -1,11 +1,29 @@
 <template>
-  <div class="checkbox">
-    <p>Play with random numbers: </p>
-    <label class="container">
-      <input type="checkbox" v-model="isChecked" />
-      <div class="checkmark"></div>
-    </label>
+  <div class="number-editor">
+
+    <div class="checkbox">
+      <p>{{label}}:</p>
+      <label class="container">
+        <input type="checkbox" v-model="useRandoms" />
+        <div class="checkmark"></div>
+      </label>
+    </div>
     
+
+    <div class="manual">
+      <p>Add your numbers:</p>
+      <div class="input-cont">
+        <div v-for="(n, i) in manualPlayerNumbers">
+          <input :id="i" 
+                  :class="(outOfRangeError.includes(i) || duplicatedError.includes(i)) ? 'error' : 'valid'"
+                  v-model.number="manualPlayerNumbers[i]" 
+                  v-on:input="checkErrors(i)"/>
+        </div>
+        
+      </div>
+      <span v-if="(outOfRangeError.length || duplicatedError.length)" class="error-msg">Error</span>
+    </div>
+
   </div>
 </template>
 
@@ -13,8 +31,18 @@
 <script>
 export default {
   name: 'Checkbox',
+  props: ['label'],
+  data () {
+    return {
+      manualPlayerNumbers: new Array(5),
+      outOfRangeError: [],
+      outOfRangeMessage: 'Number must be between 1 and 90.',
+      duplicatedError: [],
+      duplicatedMessage: 'Duplicated number.'
+    }
+  },
   computed: {
-    isChecked: {
+    useRandoms: {
       get() {
         return this.$store.state.usingRandom
       },
@@ -25,6 +53,26 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    checkErrors(i) {
+      const d = this.$data
+      d.outOfRangeError = []
+      d.duplicatedError = []
+
+      if (typeof d.manualPlayerNumbers[i] !== 'number') {
+        d.manualPlayerNumbers[i] = undefined
+      }
+
+      d.manualPlayerNumbers.forEach((num, k) => {
+        if (num < 1 || num > 90) {
+          d.outOfRangeError.push(k)
+        }
+        if (d.manualPlayerNumbers.filter(n => n === num).length > 1) {
+          d.duplicatedError.push(k)
+        }
+      })
+    }
   }
 }
 
@@ -32,38 +80,43 @@ export default {
 
 
 <style scoped lang="scss">
-  .checkbox {
+  .number-editor {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 32px;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 32px;
 
-    .container {
-      position: relative;
-      width: 32px;
-      margin-left: 50px;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-
-      input {
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-      }
-
-      .checkmark {
-        background-color: white;
-        border: 1px solid $dark-color;
-        border-radius: 5px;
+    .checkbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 38px;
+      .container {
+        position: relative;
         width: 32px;
-        height: 32px;
+        margin-left: 10px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        input {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+        .checkmark {
+          background-color: white;
+          border: 1px solid $dark-color;
+          border-radius: 5px;
+          width: 32px;
+          height: 32px;
+          box-shadow: $shadow;
+        }
       }
     }
 
@@ -76,6 +129,52 @@ export default {
       background-image: url('@/assets/tick.svg');
       background-repeat: no-repeat;
       background-position: center;
+    }
+
+    .manual {
+      display: grid;
+      grid-template-columns: 150px auto;
+      align-items: center;
+      position: relative;
+
+      .error-msg {
+        position: absolute;
+        left: 156px;
+        bottom: -25px;
+        color: red;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 26px;
+      }
+      .input-cont {
+        display: flex;
+        input {
+          background-color: white;
+          border: 1px solid $dark-color;
+          border-radius: 5px;
+          width: 32px;
+          height: 32px;
+          box-shadow: $shadow;
+          margin: 0 8px;
+          text-align: center;
+
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 22px;
+          text-transform: uppercase;
+          color: $dark-color;
+
+          &:active, &:focus {
+            outline: 2px solid $base-color;
+          }
+
+          &.error {
+            outline: 2px solid red;
+          }
+        }
+      }
     }
   }
 

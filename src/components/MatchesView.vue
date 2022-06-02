@@ -3,19 +3,19 @@
 
         <section>
             <p>2 matches</p>
-            <p>{{matches.two}}</p>
+            <p>{{matches.two.toLocaleString()}}</p>
         </section>
         <section>
             <p>3 matches</p>
-            <p>{{matches.three}}</p>
+            <p>{{matches.three.toLocaleString()}}</p>
         </section>    
         <section>
             <p>4 matches</p>
-            <p>{{matches.four}}</p>
+            <p>{{matches.four.toLocaleString()}}</p>
         </section>  
         <section>
             <p>5 matches</p>
-            <p>{{matches.five}}</p>
+            <p>{{matches.five.toLocaleString()}}</p>
         </section> 
 
     </div>
@@ -44,7 +44,9 @@ export default {
             text-align: center;
             height: 72px;
             border: 1px solid $secondary-color;
-            padding: 12px 34px;
+            padding: 12px;
+            width: 127px;
+            box-shadow: $shadow;
 
             &:first-of-type {
                 border-radius: 10px 0px 0px 10px;

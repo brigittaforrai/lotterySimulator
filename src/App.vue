@@ -1,16 +1,16 @@
 <template>
   <LotteryHeader/>
-  <Home/>
+  <Simulator/>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import Simulator from './components/Simulator.vue'
 import LotteryHeader from './components/LotteryHeader.vue'
 
 export default {
   name: 'App',
   components: {
-    Home,
+    Simulator,
     LotteryHeader
   }
 }

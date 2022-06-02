@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
 
 $base-color: #A5D9C8;
+$base-light: #E9F5F1;
 $white: #fff;
 $dark-color: #020056;
 $secondary-color: #F6F0C6;
-$gradient: linear-gradient(270deg, #F6F0C6 0%, #D9135D 0.01%, rgba(214, 19, 92, 0.996895) 0.02%, #F6F0C6 0.03%, #A6D9C8 80.73%, #A5D9C8 100%);
+$gradient: linear-gradient(270deg, $secondary-color 0%, #D9135D 0.01%, rgba(214, 19, 92, 0.996895) 0.02%, $secondary-color 0.03%, #A6D9C8 80.73%, #A5D9C8 100%);
 $font: 'Nunito', sans-serif;
+$shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
 

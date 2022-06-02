@@ -1,34 +1,21 @@
 <template>
   <div class="simulator">
 
-    <MyButton name="Start simulator" @click="start"></MyButton>
-    <MyButton name="Stop" @click="stop"></MyButton>
-
     <h1>Result</h1>
-    <section>
-        <div>
-            <p>Number of tickets</p>
-            <p>{{numOfTickets}}</p>
-        </div>
-        <div>
-            <p>Years spent</p>
-            <p>{{years}}</p>
-        </div>    
-        <div>
-            <p>Cost of tickets</p>
-            <p>{{cost}}</p>
-        </div>    
-    </section>
-
+    <StatsView/>
     <MatchesView/>
+    <NumberView name="Winning numbers" :numbers="winningNums"/>
+    <NumberView name="Your numbers" :numbers="playerNums"/>
 
-    <NumberView name="Winning numbers" :numbers="winningNums"></NumberView>
-    <NumberView name="Your numbers" :numbers="playerNums"></NumberView>
+    <hr/>
 
-    <Checkbox/>
+    <Checkbox :label="'Play with random numbers'"/>
     <Slider/>
-
-
+    <div class="button-cont">
+      <MyButton v-if="!isDrawing" :title="'Start'" @click="start"/>
+      <MyButton v-else :title="'Pause'" @click="pause"/>
+    </div>
+     
   </div>
 </template>
 
@@ -38,41 +25,31 @@ import MyButton from './MyButton.vue'
 import Checkbox from './Checkbox.vue'
 import Slider from './Slider.vue'
 import MatchesView from './MatchesView.vue'
+import StatsView from './StatsView.vue'
 
 export default {
   name: 'Simulator',
-  components: {NumberView, MyButton, Checkbox, Slider, MatchesView},
-  data () {
-    return {
-    }
-  },
+  components: {NumberView, MyButton, Checkbox, Slider, MatchesView, StatsView},
   computed: {
+    test () {
+      return true
+    },
+    isDrawing() {
+      return this.$store.state.isDrawing
+    },
     winningNums () {
       return this.$store.state.winningNumbers
     },
     playerNums () {
       return this.$store.state.playerNumbers
-    },
-    numOfTickets () {
-      return this.$store.state.numberOfTickets
-    },
-    years () {
-      return this.$store.state.yearsSpent
-    },
-    cost () {
-      return this.$store.state.costOfTickets
-    },
-    matches () {
-      return this.$store.state.matches
     }
   },
    methods: {
     start() {
       this.$store.dispatch('drawing')
     },
-    stop() {
-      this.$store.state.isDrawing = false
-      clearInterval(this.$store.state.timeOut)
+    pause() {
+      this.$store.commit('pause')
     }
   }
 }
@@ -85,7 +62,7 @@ export default {
         width: 80%;
         max-width : 900px;
         height: auto;
-        margin: 48px;
+        margin: 48px auto;
         padding: 48px 78px;
         background: $white;
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -99,19 +76,15 @@ export default {
           text-transform: capitalize;
         }
 
-        section {
-          padding: 18px 24px;
-          margin: 32px 0;
-          background: $base-color;
-          border-radius: 10px;
-          color: $white;
-          max-width: 50%;
-          min-width: 220px;
-          div {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          }
+        hr {
+          margin: 48px 0;
+          border: 1px solid $base-light;
+        }
+
+        .button-cont {
+          margin-top: 32px;
+          align-items: center;
+          text-align: center;
         }
     }
 </style>

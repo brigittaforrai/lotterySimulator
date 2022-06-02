@@ -38,35 +38,40 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
     .slider {
         width: 100%;
+        margin-top: 32px;
         
         input[type='range'] {
             -webkit-appearance: none;
             -moz-appearance: none;
             width: 100%;
-            height: 4px;
+            height: 10px;
             border-radius: 5px;  
             background-color: $base-color;
             outline: none;
             -webkit-transition: .2s;
             transition: opacity .2s;
 
+            &:disabled {
+                background-color: $base-light;
+            }
+
+            &:disabled::-webkit-slider-thumb, :disabled::-moz-range-thumb {
+                cursor: default;
+            }
+
             &::-webkit-slider-thumb {
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
-                width: 14px;
-                height: 14px;
+                width: 10px;
+                height: 10px;
                 border-radius: 50%; 
                 background-color: white;
                 border: 1px solid $base-color;
                 cursor: pointer;
-
-                &:focus {
-                    background-color: red;
-                }
             }
 
             &::-moz-range-thumb {

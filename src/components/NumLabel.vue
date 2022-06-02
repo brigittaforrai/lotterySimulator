@@ -1,5 +1,5 @@
 <template>
-<div class="numLabel"> {{ number }}</div>
+<div class="numLabel"> <p>{{ number }}</p></div>
 </template>
 
 <script>
@@ -18,13 +18,17 @@
         height: 38px;
         padding: 8px 5px;
         margin: 0 8px;
-
         text-align: center;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 22px;
-        text-transform: uppercase;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: $shadow;
+
+        p {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            text-transform: uppercase;
+            width: 100%;
+            heigth: 100%;
+        }
     }
 </style>
