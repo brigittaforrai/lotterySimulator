@@ -9,7 +9,7 @@
             <p>{{years}}</p>
         </div>    
         <div>
-            <p>Cost of tickets</p>
+            <p>Cost of tickets (HUF)</p>
             <p>{{cost}}</p>
         </div> 
     </div>
