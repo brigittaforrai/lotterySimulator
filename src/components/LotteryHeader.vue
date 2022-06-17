@@ -14,6 +14,9 @@ export default {
 
 <style scoped lang="scss">
   .lottery-header {
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 60px;
     width: 100%;
     background: $gradient;

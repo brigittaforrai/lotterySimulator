@@ -33,9 +33,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   color: $dark-color;
 
+  max-width: 100vw;
   width: 100vw;
   min-height: 100vh;
   height: 100%;
+  padding-top: 60px;
 }
 
 </style>
