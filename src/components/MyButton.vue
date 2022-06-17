@@ -24,6 +24,10 @@ export default {
     cursor: pointer;
     box-shadow: $shadow;
 
+    @include mini-phone {
+      width: 100px;
+    }
+
     &:active {
       background: $base-color;
       color: $white;
