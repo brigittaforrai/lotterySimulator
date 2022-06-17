@@ -1,22 +1,22 @@
 <template>
-  <div class="simulator" :class="{hitTheJackpot: hitTheJackpot}">
+<div class="simulator" :class="{hitTheJackpot: hitTheJackpot}">
 
-    <h1>{{hitTheJackpot ? 'You won the lottary!' : 'Result'}}</h1>
-    <StatsView/>
-    <MatchesView/>
-    <NumberView name="Winning numbers" :numbers="winningNums"/>
-    <NumberView name="Your numbers" :numbers="playerNums"/>
+  <h1>{{hitTheJackpot ? 'You won the lottary!' : 'Result'}}</h1>
+  <StatsView />
+  <MatchesView />
+  <NumberView name="Winning numbers" :numbers="winningNums" />
+  <NumberView name="Your numbers" :numbers="playerNums" />
 
-    <hr/>
+  <hr />
 
-    <NumberEditor/>
-    <Slider/>
-    <div class="button-cont">
-      <MyButton :title="buttonLabel" @click="isDrawing ? pause() : start()" :disabled="drawDisabled || hitTheJackpot" />
-      <MyButton :title="'Stop'" @click="stop" :disabled="!isDrawing && hasStarted == 0"/>
-    </div>
-     
+  <NumberEditor />
+  <Slider />
+  <div class="button-cont">
+    <MyButton :title="buttonLabel" @click="isDrawing ? pause() : start()" :disabled="drawDisabled || hitTheJackpot" />
+    <MyButton :title="'Stop'" @click="stop" :disabled="!isDrawing && hasStarted == 0" />
   </div>
+
+</div>
 </template>
 
 <script>
@@ -29,39 +29,46 @@ import StatsView from './StatsView.vue'
 
 export default {
   name: 'Simulator',
-  components: {NumberView, MyButton, NumberEditor, Slider, MatchesView, StatsView},
+  components: {
+    NumberView,
+    MyButton,
+    NumberEditor,
+    Slider,
+    MatchesView,
+    StatsView
+  },
   computed: {
-    test () {
+    test() {
       return true
     },
     isDrawing() {
       return this.$store.state.isDrawing
     },
-    winningNums () {
+    winningNums() {
       return this.$store.state.winningNumbers
     },
-    playerNums () {
+    playerNums() {
       return this.$store.state.playerNumbers
     },
-    drawDisabled () {
+    drawDisabled() {
       const nums = this.$store.state.playerNumbers.filter(n => n != undefined)
       return this.$store.state.hasError || nums.length < 5
     },
-    hasStarted () {
+    hasStarted() {
       return this.$store.state.numberOfTickets > 0
     },
-    buttonLabel () {
+    buttonLabel() {
       if (this.isDrawing) {
         return 'Pause'
       } else {
         return this.hasStarted ? 'Continue' : 'Start'
       }
     },
-    hitTheJackpot () {
+    hitTheJackpot() {
       return this.$store.state.hitTheJackpot
     }
   },
-   methods: {
+  methods: {
     start() {
       this.$store.dispatch('drawing')
     },
@@ -77,47 +84,45 @@ export default {
 
 
 <style scoped lang="scss">
+.simulator {
+    width: 80%;
+    max-width: 900px;
+    height: auto;
+    margin: 48px auto;
+    padding: 48px 78px;
+    background: $white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
 
-    .simulator {
-        width: 80%;
-        max-width : 900px;
-        height: auto;
-        margin: 48px auto;
-        padding: 48px 78px;
-        background: $white;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 24px;
+    @include phone {
+        padding: 16px 16px 32px;
+        margin: 16px;
+        width: calc(100% - 32px);
+    }
 
-        @include phone {   
-            padding: 16px; 
-            padding-bottom: 32px;
-            margin: 16px;
-            width: calc(100% - 32px);
-        }
+    h1 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 55px;
+        text-transform: capitalize;
+    }
 
-        h1 {
-          font-style: normal;
-          font-weight: 700;
-          font-size: 40px;
-          line-height: 55px;
-          text-transform: capitalize;
-        }
+    hr {
+        margin: 48px 0;
+        border: 1px solid $base-light;
 
-        hr {
-          margin: 48px 0;
-          border: 1px solid $base-light;
-
-          @include phone {
+        @include phone {
             margin: 24px 0;
-          }
-        }
-
-        .button-cont {
-          display: flex;
-          justify-content: space-around;
-          margin-top: 32px;
-          align-items: center;
-          text-align: center;
         }
     }
+
+    .button-cont {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 32px;
+        align-items: center;
+        text-align: center;
+    }
+}
 </style>

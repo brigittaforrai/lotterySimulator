@@ -1,39 +1,34 @@
 <template>
-  <div class="number-editor">
+<div class="number-editor">
 
-    <div class="checkbox" :class="{disabled: ticketNum > 0}">
-      <p>Play with random numbers:</p>
-      <label class="container">
-        <input type="checkbox" v-model="useRandoms" :disabled="ticketNum > 0"  />
-        <div class="checkmark"></div>
-      </label>
-    </div>
-    
+  <div class="checkbox" :class="{disabled: ticketNum > 0}">
+    <p>Play with random numbers:</p>
+    <label class="container">
+      <input type="checkbox" v-model="useRandoms" :disabled="ticketNum > 0" />
+      <div class="checkmark"></div>
+    </label>
+  </div>
 
-    <div class="manual" :class="{disabled: (useRandoms || ticketNum > 0)}">
-      <p>Add your numbers:</p>
-      <div class="input-cont">
-        <div v-for="(n, i) in manualPlayerNumbers">
-          <input :id="i" 
-                  :disabled="useRandoms || ticketNum > 0"
-                  :class="(outOfRangeError.includes(i) || duplicatedError.includes(i)) ? 'error' : 'valid'"
-                  v-model.number="manualPlayerNumbers[i]" 
-                  v-on:input="checkErrors(i)"/>
-        </div>
+  <div class="manual" :class="{disabled: (useRandoms || ticketNum > 0)}">
+    <p>Add your numbers:</p>
+    <div class="input-cont">
+      <div v-for="(n, i) in manualPlayerNumbers">
+        <input :id="i" :disabled="useRandoms || ticketNum > 0" :class="(outOfRangeError.includes(i) || duplicatedError.includes(i)) ? 'error' : 'valid'" v-model.number="manualPlayerNumbers[i]" v-on:input="checkErrors(i)" />
       </div>
     </div>
   </div>
-  <div class="error-msgs">
-    <span v-if="duplicatedError.length" class="error-msg">{{duplicatedMessage}}</span>
-    <span v-if="outOfRangeError.length" class="error-msg">{{outOfRangeMessage}}</span>
-  </div>
+</div>
+<div class="error-msgs">
+  <span v-if="duplicatedError.length" class="error-msg">{{duplicatedMessage}}</span>
+  <span v-if="outOfRangeError.length" class="error-msg">{{outOfRangeMessage}}</span>
+</div>
 </template>
 
 
 <script>
 export default {
   name: 'NumberEditor',
-  data () {
+  data() {
     return {
       manualPlayerNumbers: new Array(5),
       outOfRangeError: [],
@@ -43,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ticketNum () {
+    ticketNum() {
       return this.$store.state.numberOfTickets
     },
     useRandoms: {
@@ -52,7 +47,7 @@ export default {
       },
       set(value) {
         this.$store.commit('setRandom', value)
-        if(value) {
+        if (value) {
           this.$store.dispatch('generatePlayerNumbers')
         } else {
           this.$store.commit('setUserNumbers', [])
@@ -85,178 +80,176 @@ export default {
     }
   }
 }
-
 </script>
 
 
 <style scoped lang="scss">
-  .number-editor {
+.number-editor {
     display: flex;
     justify-content: space-between;
     align-items: start;
     // margin-top: 32px;
 
     @include tablet {
-      flex-wrap: wrap;
+        flex-wrap: wrap;
     }
 
     @include phone {
-      flex-wrap: wrap;
+        flex-wrap: wrap;
     }
 
     .checkbox {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 38px;
-      .container {
-        position: relative;
-        width: 32px;
-        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 38px;
+        .container {
+            position: relative;
+            width: 32px;
+            margin-left: 10px;
+
+            @include phone {
+                width: 20px;
+            }
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+            .checkmark {
+                background-color: white;
+                border: 1px solid $dark-color;
+                border-radius: 5px;
+                width: 32px;
+                height: 32px;
+                box-shadow: $shadow;
+
+                @include phone {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 5px;
+                    padding: 3px;
+                }
+            }
+        }
+
+        @include tablet {
+            width: 100%;
+            margin-bottom: 24px;
+        }
 
         @include phone {
-          width: 20px;
+            width: 100%;
+            margin-bottom: 18px;
         }
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        input {
-          position: absolute;
-          left: 0;
-          top: 0;
-          opacity: 0;
-          cursor: pointer;
-          height: 0;
-          width: 0;
+
+        &.disabled {
+            color: $disabled-color;
+            .checkmark {
+                border: 1px solid $disabled-color;
+            }
         }
-        .checkmark {
-          background-color: white;
-          border: 1px solid $dark-color;
-          border-radius: 5px;
-          width: 32px;
-          height: 32px;
-          box-shadow: $shadow;
-
-          @include phone {
-            width: 24px;
-            height: 24px;
-            border-radius: 5px;
-            padding: 3px;
-          }
-        }
-      }
-
-      @include tablet {
-        width: 100%;
-        margin-bottom: 24px;
-      }
-
-      @include phone {
-        width: 100%;
-        margin-bottom: 18px;
-      }
-
-      &.disabled {
-        color: $disabled-color;
-        .checkmark {
-          border: 1px solid $disabled-color;
-        }
-      }
     }
 
     .container:hover input ~ .checkmark {
-      background-color: #E9F5F1;
-      border: 1px solid $base-color
+        background-color: #E9F5F1;
+        border: 1px solid $base-color;
     }
 
     .container input:checked ~ .checkmark {
-      background-image: url('@/assets/tick.svg');
-      background-repeat: no-repeat;
-      background-position: center;
+        background-image: url("@/assets/tick.svg");
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .manual {
-      display: grid;
-      grid-template-columns: 150px auto;
-      align-items: center;
-      position: relative;
+        display: grid;
+        grid-template-columns: 150px auto;
+        align-items: center;
+        position: relative;
 
-      @include phone {
-        grid-template-columns: auto auto;
-      }
-
-      @include mini-phone {
-        display: block;
-      }
-      .input-cont {
-        display: flex;
+        @include phone {
+            grid-template-columns: auto auto;
+        }
 
         @include mini-phone {
-          margin-top: 8px;
+            display: block;
         }
-        input {
-          box-sizing: border-box;
-          background-color: white;
-          border: 1px solid $dark-color;
-          border-radius: 5px;
-          width: 32px;
-          height: 32px;
-          box-shadow: $shadow;
-          margin: 0 8px;
-          text-align: center;
+        .input-cont {
+            display: flex;
 
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 22px;
-          text-transform: uppercase;
-          color: $dark-color;
+            @include mini-phone {
+                margin-top: 8px;
+            }
+            input {
+                box-sizing: border-box;
+                background-color: white;
+                border: 1px solid $dark-color;
+                border-radius: 5px;
+                width: 32px;
+                height: 32px;
+                box-shadow: $shadow;
+                margin: 0 8px;
+                text-align: center;
 
-          @include mini-phone {
-            margin: 0 8px 0 0;
-          }
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                text-transform: uppercase;
+                color: $dark-color;
 
-          @include phone {
-            width: 24px;
-            height: 24px;
-            border-radius: 5px;
-            padding: 3px;
-            font-size: 12px;
-            line-height: 16px;
-          }
+                @include mini-phone {
+                    margin: 0 8px 0 0;
+                }
 
-          &:active, &:focus {
-            outline: 2px solid $base-color;
-          }
+                @include phone {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 5px;
+                    padding: 3px;
+                    font-size: 12px;
+                    line-height: 16px;
+                }
 
-          &.error {
-            outline: 2px solid red;
-          }
+                &:active,
+                &:focus {
+                    outline: 2px solid $base-color;
+                }
+
+                &.error {
+                    outline: 2px solid red;
+                }
+            }
         }
-      }
 
-      @include phone {
-        width: 100%;
-      }
-
-      &.disabled {
-        color: $disabled-color;
-        input {
-          border: 1px solid $disabled-color;
+        @include phone {
+            width: 100%;
         }
-      }
+
+        &.disabled {
+            color: $disabled-color;
+            input {
+                border: 1px solid $disabled-color;
+            }
+        }
     }
-  }
+}
 
-  .error-msg {
-        color: red;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 11px;
-        line-height: 26px;
-      }
-
+.error-msg {
+    color: red;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 26px;
+}
 </style>
-

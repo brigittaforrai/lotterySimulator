@@ -1,5 +1,5 @@
 <template>
-  <button>{{ title }}</button>
+<button>{{ title }}</button>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
 
 
 <style scoped lang="scss">
-  button {
+button {
     width: 140px;
     height: 38px;
     border-radius: 10px;
@@ -25,13 +25,12 @@ export default {
     box-shadow: $shadow;
 
     @include mini-phone {
-      width: 100px;
+        width: 100px;
     }
 
     &:active {
-      background: $base-color;
-      color: $white;
+        background: $base-color;
+        color: $white;
     }
-  }
-
+}
 </style>

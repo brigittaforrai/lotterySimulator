@@ -1,4 +1,3 @@
-// $big-desktop: 1800px;    // Desktop screen size.
 $desktop: 1024px;    // Desktop screen size.
 $tablet: 720px; // Tablet screen size.
 $phone: 320px;  // Phone screen size.
@@ -16,6 +15,3 @@ $phone: 320px;  // Phone screen size.
 @mixin desktop {
   @media (min-width: $desktop) { @content; }
 }
-// @mixin big-desktop {
-//   @media (min-width: $big-desktop) { @content; }
-// }

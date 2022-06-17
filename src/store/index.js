@@ -51,21 +51,21 @@ export default createStore({
     updateData(state) {
       const n = state.numberOfTickets
       state.costOfTickets = n * TICKET_PRICE
-      state.yearsSpent = Math.floor(n/WEEKS_PER_YEAR)
+      state.yearsSpent = Math.floor(n / WEEKS_PER_YEAR)
     },
     setMatches(state) {
       const n = getNumberOfMatches(state.winningNumbers, state.playerNumbers)
       switch (n) {
-        case 2: 
+        case 2:
           state.matches.two += 1
           break
-        case 3: 
+        case 3:
           state.matches.three += 1
           break
-        case 4: 
+        case 4:
           state.matches.four += 1
           break
-        case 5: 
+        case 5:
           state.matches.five += 1
           state.hitTheJackpot = true
           state.isDrawing = false
@@ -76,7 +76,9 @@ export default createStore({
   },
 
   actions: {
-    stop({state}) {
+    stop({
+      state
+    }) {
       clearInterval(state.drawingInterval)
       state.isDrawing = false
       state.numberOfTickets = 0
@@ -87,10 +89,15 @@ export default createStore({
         state.matches[key] = 0
       }
     },
-    generatePlayerNumbers({ commit }) {
+    generatePlayerNumbers({
+      commit
+    }) {
       commit('setUserNumbers', generateRandomNumbers())
     },
-    drawing({ commit, state }) {
+    drawing({
+      commit,
+      state
+    }) {
       if (state.isDrawing) {
         return
       }
