@@ -32,5 +32,13 @@ html, body, body * {
   width: 100vw;
   height: 100vh;
   background-color: #F2F2F2;
+  
+
+  @include phone {
+    min-height: 100vh;
+    height: 100%;
+    padding-bottom: 20px;
+  }
 }
+
 </style>

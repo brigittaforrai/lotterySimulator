@@ -37,6 +37,11 @@ export default {
     .matches-view {
         display: flex;
 
+        @include phone {
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
         section {
             display: flex;
             flex-direction: column;
@@ -70,6 +75,23 @@ export default {
                 line-height: 22px;
                 text-transform: uppercase;
                 margin-top: 9px;
+            }
+
+            @include phone {
+                width: calc((100% - 3px) / 2);
+                
+                &:first-of-type {
+                    border-radius: 10px 0 0 0;
+                }
+                &:last-of-type {
+                    border-radius: 0 0 10px 0;
+                }
+                &:nth-of-type(2) {
+                    border-radius: 0 10px 0 0;
+                }
+                &:nth-of-type(3) {
+                    border-radius: 0 0 0 10px;
+                }
             }
         }
     }

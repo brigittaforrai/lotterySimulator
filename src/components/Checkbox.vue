@@ -84,7 +84,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin-top: 32px;
+    // margin-top: 32px;
+
+    @include phone {
+      flex-wrap: wrap;
+    }
 
     .checkbox {
       display: flex;
@@ -95,6 +99,10 @@ export default {
         position: relative;
         width: 32px;
         margin-left: 10px;
+
+        @include phone {
+          width: 20px;
+        }
         cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -116,7 +124,19 @@ export default {
           width: 32px;
           height: 32px;
           box-shadow: $shadow;
+
+          @include phone {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            padding: 3px;
+          }
         }
+      }
+
+      @include phone {
+        width: 100%;
+        margin-bottom: 18px;
       }
     }
 
@@ -137,6 +157,10 @@ export default {
       align-items: center;
       position: relative;
 
+      @include phone {
+        grid-template-columns: auto auto;
+      }
+
       .error-msg {
         position: absolute;
         left: 156px;
@@ -150,6 +174,7 @@ export default {
       .input-cont {
         display: flex;
         input {
+          box-sizing: border-box;
           background-color: white;
           border: 1px solid $dark-color;
           border-radius: 5px;
@@ -166,6 +191,16 @@ export default {
           text-transform: uppercase;
           color: $dark-color;
 
+          @include phone {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            padding: 3px;
+
+            font-size: 12px;
+            line-height: 16px;
+          }
+
           &:active, &:focus {
             outline: 2px solid $base-color;
           }
@@ -174,6 +209,10 @@ export default {
             outline: 2px solid red;
           }
         }
+      }
+
+      @include phone {
+        width: 100%;
       }
     }
   }

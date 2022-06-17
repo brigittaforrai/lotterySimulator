@@ -41,6 +41,13 @@ export default {
         color: $white;
         max-width: 50%;
         min-width: 220px;
+
+        @include phone {    
+            width: 100%;
+            max-width: 100%;
+            min-width: 200px;
+            margin: 24px 0;
+        }
         div {
         display: flex;
         flex-direction: row;

@@ -32,6 +32,12 @@ export default {
       line-height: 55px;
       text-transform: capitalize;
       color: $white;
+
+      @include phone {
+        font-size: 20px;
+        line-height: 27px;
+        margin: 3px 2px 0 16px;
+      }
     }
   }
 </style>

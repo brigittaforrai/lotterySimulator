@@ -21,6 +21,14 @@
         text-align: center;
         box-shadow: $shadow;
 
+        @include phone {    
+            width: 22px;
+            height: 25px;
+            padding: 6px 4px;
+            border-radius: 5px;
+            margin: 0 4px;
+        }
+
         p {
             font-style: normal;
             font-weight: 400;
@@ -29,6 +37,11 @@
             text-transform: uppercase;
             width: 100%;
             heigth: 100%;
+
+            @include phone {    
+                font-size: 12px;
+                line-height: 16px;
+            }
         }
     }
 </style>

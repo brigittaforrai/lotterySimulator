@@ -30,6 +30,20 @@ export default {
         grid-template-columns: 150px auto;
         align-items: center;
         margin-top: 32px;
+
+        @include phone {
+            grid-template-columns: auto auto;
+            p {
+              min-width: 100px;
+            }
+        }
+
+        p {
+          @include phone {
+            font-size: 12px;
+            line-height: 16px;
+          }
+        }
         div {
             display: flex;
         }

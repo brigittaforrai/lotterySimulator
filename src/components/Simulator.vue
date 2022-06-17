@@ -68,6 +68,12 @@ export default {
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         border-radius: 24px;
 
+        @include phone {   
+            padding: 16px; 
+            margin: 16px;
+            width: calc(100% - 32px);
+        }
+
         h1 {
           font-style: normal;
           font-weight: 700;
@@ -79,6 +85,10 @@ export default {
         hr {
           margin: 48px 0;
           border: 1px solid $base-light;
+
+          @include phone {
+            margin: 24px 0;
+          }
         }
 
         .button-cont {
