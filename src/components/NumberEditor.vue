@@ -49,6 +49,7 @@ export default {
         this.$store.commit('setRandom', value)
         if (value) {
           this.$store.dispatch('generatePlayerNumbers')
+          this.manualPlayerNumbers = new Array(5)
         } else {
           this.$store.commit('setUserNumbers', [])
         }
