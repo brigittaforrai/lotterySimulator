@@ -23,6 +23,7 @@ button {
     line-height: 22px;
     cursor: pointer;
     box-shadow: $shadow;
+    color: $dark-color;
 
     @include mini-phone {
         width: 100px;
@@ -31,6 +32,9 @@ button {
     &:active {
         background: $base-color;
         color: $white;
+    }
+    &:disabled {
+      color: $disabled-color;
     }
 }
 </style>
