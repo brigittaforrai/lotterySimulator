@@ -91,6 +91,9 @@ export default createStore({
         return
       }
 
+      let maxSpeedVal = 1000
+      let speedReversed = maxSpeedVal - state.speed
+
       state.isDrawing = true
       state.drawingInterval = setInterval(() => {
         state.winningNumbers = generateRandomNumbers()
@@ -98,7 +101,7 @@ export default createStore({
         state.numberOfTickets++
         commit('updateData')
         commit('setMatches')
-      }, state.speed)
+      }, speedReversed)
     }
   },
 
