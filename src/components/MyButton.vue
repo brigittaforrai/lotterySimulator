@@ -12,7 +12,7 @@ export default {
 
 <style scoped lang="scss">
   button {
-    width: 160px;
+    width: 140px;
     height: 38px;
     border-radius: 10px;
     border: 1px solid $base-color;

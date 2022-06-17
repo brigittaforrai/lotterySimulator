@@ -11,6 +11,7 @@ export default createStore({
     yearsSpent: 0,
     costOfTickets: 0,
     usingRandom: true,
+    hasError: false,
     speed: 300,
     playerNumbers: [6, 8, 23, 72, 60],
     winningNumbers: [],
@@ -29,18 +30,11 @@ export default createStore({
       clearInterval(state.drawingInterval)
       state.isDrawing = false
     },
-    // stop(state) {
-    //   clearInterval(state.drawingInterval)
-    //   state.isDrawing = false
-    //   state.numberOfTickets = 0
-    //   state.costOfTickets = 0
-    //   state.yearsSpent = 0
-    //   for (const [key, value] of Object.entries(state.matches)) {
-    //     state.matches[key] = 0
-    //   }
-    // },
     setRandom(state, val) {
       state.usingRandom = val
+    },
+    setError(state, val) {
+      state.hasError = val
     },
     setSpeed(state, val) {
       state.speed = val
@@ -83,6 +77,16 @@ export default createStore({
   },
 
   actions: {
+    stop({state}) {
+      clearInterval(state.drawingInterval)
+      state.isDrawing = false
+      state.numberOfTickets = 0
+      state.costOfTickets = 0
+      state.yearsSpent = 0
+      for (const [key, value] of Object.entries(state.matches)) {
+        state.matches[key] = 0
+      }
+    },
     generatePlayerNumbers({ commit }) {
       commit('setUserNumbers', generateRandomNumbers())
     },
@@ -93,21 +97,20 @@ export default createStore({
 
       let maxSpeedVal = 1000
       let speedReversed = maxSpeedVal - state.speed
-
       state.isDrawing = true
-      state.drawingInterval = setInterval(() => {
+
+      const draw = () => {
         state.winningNumbers = generateRandomNumbers()
         state.playerNumbers = state.usingRandom ? generateRandomNumbers() : state.playerNumbers
         state.numberOfTickets++
         commit('updateData')
         commit('setMatches')
+      }
+
+      draw()
+      state.drawingInterval = setInterval(() => {
+        draw()
       }, speedReversed)
     }
-  },
-
-  getters: {
-  },
-  
-  modules: {
   }
 })

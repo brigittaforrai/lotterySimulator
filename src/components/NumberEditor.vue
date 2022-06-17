@@ -2,7 +2,7 @@
   <div class="number-editor">
 
     <div class="checkbox">
-      <p>{{label}}:</p>
+      <p>Play with random numbers:</p>
       <label class="container">
         <input type="checkbox" v-model="useRandoms" />
         <div class="checkmark"></div>
@@ -10,35 +10,36 @@
     </div>
     
 
-    <div class="manual">
+    <div class="manual" :class="{disabled: useRandoms}">
       <p>Add your numbers:</p>
       <div class="input-cont">
         <div v-for="(n, i) in manualPlayerNumbers">
           <input :id="i" 
+                  :disabled="useRandoms"
                   :class="(outOfRangeError.includes(i) || duplicatedError.includes(i)) ? 'error' : 'valid'"
                   v-model.number="manualPlayerNumbers[i]" 
                   v-on:input="checkErrors(i)"/>
         </div>
-        
       </div>
-      <span v-if="(outOfRangeError.length || duplicatedError.length)" class="error-msg">Error</span>
     </div>
-
+  </div>
+  <div class="error-msgs">
+    <span v-if="duplicatedError.length" class="error-msg">{{duplicatedMessage}}</span>
+    <span v-if="outOfRangeError.length" class="error-msg">{{outOfRangeMessage}}</span>
   </div>
 </template>
 
 
 <script>
 export default {
-  name: 'Checkbox',
-  props: ['label'],
+  name: 'NumberEditor',
   data () {
     return {
       manualPlayerNumbers: new Array(5),
       outOfRangeError: [],
       outOfRangeMessage: 'Number must be between 1 and 90.',
       duplicatedError: [],
-      duplicatedMessage: 'Duplicated number.'
+      duplicatedMessage: 'Duplicated number. '
     }
   },
   computed: {
@@ -50,6 +51,8 @@ export default {
         this.$store.commit('setRandom', value)
         if(value) {
           this.$store.dispatch('generatePlayerNumbers')
+        } else {
+          this.$store.commit('setUserNumbers', [])
         }
       }
     }
@@ -72,6 +75,10 @@ export default {
           d.duplicatedError.push(k)
         }
       })
+
+      const hasError = d.outOfRangeError.length || d.duplicatedError.length
+      this.$store.commit('setError', hasError)
+      this.$store.commit('setUserNumbers', d.manualPlayerNumbers)
     }
   }
 }
@@ -173,17 +180,6 @@ export default {
       @include mini-phone {
         display: block;
       }
-
-      .error-msg {
-        position: absolute;
-        left: 156px;
-        bottom: -25px;
-        color: red;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 11px;
-        line-height: 26px;
-      }
       .input-cont {
         display: flex;
 
@@ -234,8 +230,24 @@ export default {
       @include phone {
         width: 100%;
       }
+
+      &.disabled {
+        color: $disabled-color;
+
+        input {
+          border: 1px solid $disabled-color;
+        }
+      }
     }
   }
+
+  .error-msg {
+        color: red;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 26px;
+      }
 
 </style>
 

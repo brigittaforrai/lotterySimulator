@@ -9,11 +9,11 @@
 
     <hr/>
 
-    <Checkbox :label="'Play with random numbers'"/>
+    <NumberEditor/>
     <Slider/>
     <div class="button-cont">
-      <MyButton v-if="!isDrawing" :title="'Start'" @click="start"/>
-      <MyButton v-else :title="'Pause'" @click="pause"/>
+      <MyButton :title="buttonLabel" @click="isDrawing ? pause() : start()" :disabled="drawDisabled"/>
+      <MyButton :title="'Stop'" @click="stop" :disabled="!isDrawing && hasStarted == 0"/>
     </div>
      
   </div>
@@ -22,14 +22,14 @@
 <script>
 import NumberView from './NumberView.vue'
 import MyButton from './MyButton.vue'
-import Checkbox from './Checkbox.vue'
+import NumberEditor from './NumberEditor.vue'
 import Slider from './Slider.vue'
 import MatchesView from './MatchesView.vue'
 import StatsView from './StatsView.vue'
 
 export default {
   name: 'Simulator',
-  components: {NumberView, MyButton, Checkbox, Slider, MatchesView, StatsView},
+  components: {NumberView, MyButton, NumberEditor, Slider, MatchesView, StatsView},
   computed: {
     test () {
       return true
@@ -42,6 +42,20 @@ export default {
     },
     playerNums () {
       return this.$store.state.playerNumbers
+    },
+    drawDisabled () {
+      const nums = this.$store.state.playerNumbers.filter(n => n != undefined)
+      return this.$store.state.hasError || nums.length < 5
+    },
+    hasStarted () {
+      return this.$store.state.numberOfTickets > 0
+    },
+    buttonLabel () {
+      if (this.isDrawing) {
+        return 'Pause'
+      } else {
+        return this.hasStarted ? 'Continue' : 'Start'
+      }
     }
   },
    methods: {
@@ -50,6 +64,9 @@ export default {
     },
     pause() {
       this.$store.commit('pause')
+    },
+    stop() {
+      this.$store.dispatch('stop')
     }
   }
 }
@@ -93,6 +110,8 @@ export default {
         }
 
         .button-cont {
+          display: flex;
+          justify-content: space-around;
           margin-top: 32px;
           align-items: center;
           text-align: center;

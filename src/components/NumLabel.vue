@@ -24,7 +24,7 @@
         @include phone {    
             width: 22px;
             height: 25px;
-            padding: 6px 4px;
+            padding: 4px 2px;
             border-radius: 5px;
             margin: 0 4px;
         }
