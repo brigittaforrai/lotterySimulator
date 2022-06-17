@@ -1,21 +1,21 @@
 <template>
   <div class="number-editor">
 
-    <div class="checkbox">
+    <div class="checkbox" :class="{disabled: ticketNum > 0}">
       <p>Play with random numbers:</p>
       <label class="container">
-        <input type="checkbox" v-model="useRandoms" />
+        <input type="checkbox" v-model="useRandoms" :disabled="ticketNum > 0"  />
         <div class="checkmark"></div>
       </label>
     </div>
     
 
-    <div class="manual" :class="{disabled: useRandoms}">
+    <div class="manual" :class="{disabled: (useRandoms || ticketNum > 0)}">
       <p>Add your numbers:</p>
       <div class="input-cont">
         <div v-for="(n, i) in manualPlayerNumbers">
           <input :id="i" 
-                  :disabled="useRandoms"
+                  :disabled="useRandoms || ticketNum > 0"
                   :class="(outOfRangeError.includes(i) || duplicatedError.includes(i)) ? 'error' : 'valid'"
                   v-model.number="manualPlayerNumbers[i]" 
                   v-on:input="checkErrors(i)"/>
@@ -43,6 +43,9 @@ export default {
     }
   },
   computed: {
+    ticketNum () {
+      return this.$store.state.numberOfTickets
+    },
     useRandoms: {
       get() {
         return this.$store.state.usingRandom
@@ -154,6 +157,13 @@ export default {
         width: 100%;
         margin-bottom: 18px;
       }
+
+      &.disabled {
+        color: $disabled-color;
+        .checkmark {
+          border: 1px solid $disabled-color;
+        }
+      }
     }
 
     .container:hover input ~ .checkmark {
@@ -233,7 +243,6 @@ export default {
 
       &.disabled {
         color: $disabled-color;
-
         input {
           border: 1px solid $disabled-color;
         }

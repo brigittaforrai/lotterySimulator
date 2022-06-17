@@ -15,6 +15,8 @@ const generateRandomNumbers = (n = 5) => {
   }
 
   const getNumberOfMatches = (winning, player) => {
+    // to simulate hitTheJackpot return 5
+    // return 5 
     return winning.filter((n) => player.indexOf(n) !== -1).length
   }
 

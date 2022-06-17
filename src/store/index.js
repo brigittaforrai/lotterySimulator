@@ -15,7 +15,7 @@ export default createStore({
     speed: 300,
     playerNumbers: [6, 8, 23, 72, 60],
     winningNumbers: [],
-    hitTheJackPot: false,
+    hitTheJackpot: false,
     isDrawing: false,
     matches: {
       two: 0,
@@ -66,9 +66,8 @@ export default createStore({
           state.matches.four += 1
           break
         case 5: 
-          // todo
           state.matches.five += 1
-          state.hitTheJackPot = true
+          state.hitTheJackpot = true
           state.isDrawing = false
           clearInterval(state.drawingInterval)
           break
@@ -83,6 +82,7 @@ export default createStore({
       state.numberOfTickets = 0
       state.costOfTickets = 0
       state.yearsSpent = 0
+      state.hitTheJackpot = false
       for (const [key, value] of Object.entries(state.matches)) {
         state.matches[key] = 0
       }
@@ -94,9 +94,6 @@ export default createStore({
       if (state.isDrawing) {
         return
       }
-
-      let maxSpeedVal = 1000
-      let speedReversed = maxSpeedVal - state.speed
       state.isDrawing = true
 
       const draw = () => {
@@ -108,9 +105,14 @@ export default createStore({
       }
 
       draw()
-      state.drawingInterval = setInterval(() => {
-        draw()
-      }, speedReversed)
+      if (!state.hitTheJackpot) {
+        let maxSpeedVal = 1000
+        let speedReversed = maxSpeedVal - state.speed
+
+        state.drawingInterval = setInterval(() => {
+          draw()
+        }, speedReversed)
+      }
     }
   }
 })

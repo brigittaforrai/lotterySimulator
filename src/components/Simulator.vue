@@ -1,7 +1,7 @@
 <template>
-  <div class="simulator">
+  <div class="simulator" :class="{hitTheJackpot: hitTheJackpot}">
 
-    <h1>Result</h1>
+    <h1>{{hitTheJackpot ? 'You won the lottary!' : 'Result'}}</h1>
     <StatsView/>
     <MatchesView/>
     <NumberView name="Winning numbers" :numbers="winningNums"/>
@@ -12,7 +12,7 @@
     <NumberEditor/>
     <Slider/>
     <div class="button-cont">
-      <MyButton :title="buttonLabel" @click="isDrawing ? pause() : start()" :disabled="drawDisabled"/>
+      <MyButton :title="buttonLabel" @click="isDrawing ? pause() : start()" :disabled="drawDisabled || hitTheJackpot" />
       <MyButton :title="'Stop'" @click="stop" :disabled="!isDrawing && hasStarted == 0"/>
     </div>
      
@@ -56,6 +56,9 @@ export default {
       } else {
         return this.hasStarted ? 'Continue' : 'Start'
       }
+    },
+    hitTheJackpot () {
+      return this.$store.state.hitTheJackpot
     }
   },
    methods: {

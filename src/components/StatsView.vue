@@ -4,7 +4,7 @@
             <p>Number of tickets</p>
             <p>{{numOfTickets}}</p>
         </div>
-        <div>
+        <div class="years-spent">
             <p>Years spent</p>
             <p>{{years}}</p>
         </div>    
@@ -64,5 +64,11 @@ export default {
                 line-height: 19px;
             }
         }
+    }
+
+    .hitTheJackpot .stats-view div.years-spent p {
+        color: mediumVioletRed;
+        font-weight: bold;
+        font-size: 16px;
     }
 </style>
