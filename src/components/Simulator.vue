@@ -70,6 +70,7 @@ export default {
 
         @include phone {   
             padding: 16px; 
+            padding-bottom: 32px;
             margin: 16px;
             width: calc(100% - 32px);
         }

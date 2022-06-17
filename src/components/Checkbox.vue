@@ -86,6 +86,10 @@ export default {
     align-items: start;
     // margin-top: 32px;
 
+    @include tablet {
+      flex-wrap: wrap;
+    }
+
     @include phone {
       flex-wrap: wrap;
     }
@@ -134,6 +138,11 @@ export default {
         }
       }
 
+      @include tablet {
+        width: 100%;
+        margin-bottom: 24px;
+      }
+
       @include phone {
         width: 100%;
         margin-bottom: 18px;
@@ -161,6 +170,10 @@ export default {
         grid-template-columns: auto auto;
       }
 
+      @include mini-phone {
+        display: block;
+      }
+
       .error-msg {
         position: absolute;
         left: 156px;
@@ -173,6 +186,10 @@ export default {
       }
       .input-cont {
         display: flex;
+
+        @include mini-phone {
+          margin-top: 8px;
+        }
         input {
           box-sizing: border-box;
           background-color: white;
@@ -191,12 +208,15 @@ export default {
           text-transform: uppercase;
           color: $dark-color;
 
+          @include mini-phone {
+            margin: 0 8px 0 0;
+          }
+
           @include phone {
             width: 24px;
             height: 24px;
             border-radius: 5px;
             padding: 3px;
-
             font-size: 12px;
             line-height: 16px;
           }

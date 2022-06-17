@@ -42,6 +42,10 @@ export default {
         max-width: 50%;
         min-width: 220px;
 
+        @include tablet {
+            max-width: 75%;
+        }
+
         @include phone {    
             width: 100%;
             max-width: 100%;

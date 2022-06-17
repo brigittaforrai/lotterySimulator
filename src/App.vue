@@ -23,6 +23,10 @@ html, body, body * {
   box-sizing: border-box;
 }
 
+html {
+    background-color: #F2F2F2;
+}
+
 #app {
   font-family: $font;
   -webkit-font-smoothing: antialiased;
@@ -30,15 +34,8 @@ html, body, body * {
   color: $dark-color;
 
   width: 100vw;
-  height: 100vh;
-  background-color: #F2F2F2;
-  
-
-  @include phone {
-    min-height: 100vh;
-    height: 100%;
-    padding-bottom: 20px;
-  }
+  min-height: 100vh;
+  height: 100%;
 }
 
 </style>

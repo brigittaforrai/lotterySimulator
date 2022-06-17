@@ -33,15 +33,16 @@ export default {
 
         @include phone {
             grid-template-columns: auto auto;
-            p {
-              min-width: 100px;
-            }
         }
 
         p {
           @include phone {
             font-size: 12px;
             line-height: 16px;
+            min-width: 100px;
+          }
+          @include mini-phone {
+            min-width: 50px;
           }
         }
         div {

@@ -3,15 +3,19 @@ $desktop: 1024px;    // Desktop screen size.
 $tablet: 720px; // Tablet screen size.
 $phone: 320px;  // Phone screen size.
 
+
+@mixin mini-phone {
+  @media (max-width: $phone) { @content; }
+}
 @mixin phone {
-    @media (max-width: $tablet - 1) { @content; }
-  }
-  @mixin tablet {
-    @media (min-width: $tablet) { @content; }
-  }
-  @mixin desktop {
-    @media (min-width: $desktop) { @content; }
-  }
-  // @mixin big-desktop {
-  //   @media (min-width: $big-desktop) { @content; }
-  // }
+  @media (max-width: $tablet - 1) { @content; }
+}
+@mixin tablet {
+  @media (min-width: $tablet) { @content; }
+}
+@mixin desktop {
+  @media (min-width: $desktop) { @content; }
+}
+// @mixin big-desktop {
+//   @media (min-width: $big-desktop) { @content; }
+// }
